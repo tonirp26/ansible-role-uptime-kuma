@@ -1,0 +1,72 @@
+---
+- name: Ensure requiered uptime-kuma dependency is present
+  apt: 
+    name:
+      - chromium 
+      - git
+    state: present
+
+- name: Create uptime-kuma group
+  ansible.builtin.group: 
+    name: uptime-kuma
+    state: present
+
+- name: Create new user uptime-kuma for launch the application
+  user:
+    name: uptime-kuma
+    group: uptime-kuma
+    home: /var/lib/uptime-kuma
+    create_home: true
+    system: true
+
+# TODO: solucionar problema usuarios en segundas ejecuciones
+- name: Clone uptime-kuma github repository
+  ansible.builtin.git:
+    repo: "{{ app_repository_url }}"
+    dest: "{{ app_repository_dir }}"
+    version: "{{ app_version }}"
+
+- name: Set ownership
+  ansible.builtin.file:
+    path: "{{ app_repository_dir }}"
+    owner: uptime-kuma
+    group: uptime-kuma
+    recurse: true
+
+# TODO: siempre descarga, solucionar con comprobacion para que si esta presente ignorar
+- name: Install Uptime Kuma dependencies
+  ansible.builtin.command:
+    cmd: npm ci --omit dev
+    chdir: "{{ app_repository_dir }}"
+  become_user: uptime-kuma
+
+# TODO: siempre descarga, solucionar con comprobacion para que si esta presente ignorar
+- name: Download Uptime Kuma distribution
+  ansible.builtin.command:
+    cmd: npm run download-dist
+    chdir: "{{ app_repository_dir }}"
+  become_user: uptime-kuma
+
+- name: Create Chromium symlink
+  ansible.builtin.file:
+    src: /usr/bin/chromium
+    dest: "{{ app_repository_dir }}/chromium"
+    state: link
+
+- name: Copy systemd configuration fiel in place.
+  ansible.builtin.template:
+    src: uptime-kuma.service.j2
+    dest: "/etc/systemd/system/uptime-kuma.service"
+    owner: root
+    group: root
+    mode: 0644
+  notify: 
+  - Reload systemd
+  - Restart uptime-kuma
+
+- name: Ensure uptime-kuma is running and enabled on boot
+  ansible.builtin.systemd_service:
+    name: uptime-kuma
+    state: started
+    enabled: true
+

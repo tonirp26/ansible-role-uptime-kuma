@@ -1,0 +1,9 @@
+---
+# Set the URL for the uptime-kuma repository
+app_repository_url: "https://github.com/louislam/uptime-kuma.git"
+
+# Set url destination path 
+app_repository_dir: "/opt/uptime-kuma"
+
+# Set version of the app
+app_version: "2.5.5"
