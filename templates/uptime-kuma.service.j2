@@ -1,0 +1,14 @@
+[Unit]
+Description=Uptime Kuma
+After=network.target
+
+[Service]
+Type=simple
+User=uptime-kuma
+WorkingDirectory=/opt/uptime-kuma
+ExecStart=/usr/bin/npm start
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

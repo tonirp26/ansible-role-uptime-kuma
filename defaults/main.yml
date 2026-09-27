@@ -1,0 +1,5 @@
+---
+app_repository_url: "https://github.com/louislam/uptime-kuma.git"
+app_repository_dir: "/opt/uptime-kuma"
+app_version: "2.5.5"
+systemd_template: uptime-kuma.service.j2
