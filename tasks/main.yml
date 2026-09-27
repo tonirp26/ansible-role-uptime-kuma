@@ -19,33 +19,40 @@
     create_home: true
     system: true
 
-# TODO: solucionar problema usuarios en segundas ejecuciones
 - name: Clone uptime-kuma github repository
   ansible.builtin.git:
     repo: "{{ app_repository_url }}"
     dest: "{{ app_repository_dir }}"
     version: "{{ app_version }}"
+  register: app_updated
+  notify: Restart uptime-kuma
 
-- name: Set ownership
+- name: Mark uptime-kuma repository as safe
+  community.general.git_config:
+    name: safe.directory
+    scope: global
+    value: "{{ app_repository_dir }}"
+
+- name: Set ownership to uptime-kuma user
   ansible.builtin.file:
     path: "{{ app_repository_dir }}"
     owner: uptime-kuma
     group: uptime-kuma
     recurse: true
 
-# TODO: siempre descarga, solucionar con comprobacion para que si esta presente ignorar
 - name: Install Uptime Kuma dependencies
   ansible.builtin.command:
     cmd: npm ci --omit dev
     chdir: "{{ app_repository_dir }}"
   become_user: uptime-kuma
+  when: app_updated.changed == true
 
-# TODO: siempre descarga, solucionar con comprobacion para que si esta presente ignorar
 - name: Download Uptime Kuma distribution
   ansible.builtin.command:
     cmd: npm run download-dist
     chdir: "{{ app_repository_dir }}"
   become_user: uptime-kuma
+  when: app_updated.changed == true
 
 - name: Create Chromium symlink
   ansible.builtin.file:
