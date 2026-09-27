@@ -61,9 +61,9 @@
     dest: "{{ app_repository_dir }}/chromium"
     state: link
 
-- name: Copy systemd configuration fiel in place.
+- name: Copy systemd configuration template in place.
   ansible.builtin.template:
-    src: uptime-kuma.service.j2
+    src: "{{ systemd_template }}"
     dest: "/etc/systemd/system/uptime-kuma.service"
     owner: root
     group: root
