@@ -1,38 +1,63 @@
-# Ansible role: Uptiem Kuma
-=========
+# Ansible Role: Uptime Kuma
 
-A brief description of the role goes here.
+This role installs the Uptime Kuma application. Uptime Kuma is an easy-to-use self-hosted monitoring tool designed to send alerts when monitored services go down and to track uptime statistics.
 
-Requirements
-------------
+After running the role, the `uptime-kuma` service will be available on the server. The application's web interface can be accessed at `http://{your-container-ip}:3001`.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Requirements
 
-Role Variables
---------------
+Requires Node 22 or later to be installed on the server (you can use the geerlingguy.nodejs role to install Java if needed).
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+## Role Variables
 
-Dependencies
-------------
+Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+```yaml
+app_repository_url: "https://github.com/louislam/uptime-kuma.git"
+```
 
-Example Playbook
-----------------
+URL used in git clone command.
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```yaml
+app_repository_dir: "/opt/uptime-kuma"
+```
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Set repository destination path, if modified make sure that system user `uptime-kuma` can made changes.
 
-License
--------
+```yaml
+app_version: "2.5.5"
+```
 
-BSD
+Set desired version of the app.
 
-Author Information
-------------------
+```yaml
+systemd_template: "2.5.5"
+```
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+The template to use when generating systemd service.
+
+## Dependencies
+
+None.
+
+## Example Playbook
+
+```yaml
+- hosts: server
+  vars_files:
+    - vars/main.yml
+  roles:
+    - { role: geerlingguy.firewall }
+```
+
+*Inside `vars/main.yml`*:
+
+```yaml
+app_version: 2.5.5
+```
+
+## License
+
+## Author Information
+
+This role was created in 2026 by [tonirp](https://github.com/tonirp26)
