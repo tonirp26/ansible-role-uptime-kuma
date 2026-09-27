@@ -39,6 +39,7 @@
     owner: uptime-kuma
     group: uptime-kuma
     recurse: true
+  when: app_updated.changed == true
 
 - name: Install Uptime Kuma dependencies
   ansible.builtin.command:
