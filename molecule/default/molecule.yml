@@ -1,19 +1,11 @@
 ---
-ansible:
-  cfg:
-    defaults:
-      deprecation_warnings: false
-      roles_path: ${MOLECULE_PROJECT_DIRECTORY}/../:${HOME}/.ansible/roles
-
+role_name_check: 1
 dependency:
   name: galaxy
   options:
-    requirements-file: ${MOLECULE_SCENARIO_DIRECTORY}/requirements.yml
     ignore-errors: true
-
 driver:
   name: docker
-
 platforms:
   - name: instance
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-debian13}-ansible:latest"
@@ -23,7 +15,6 @@ platforms:
     cgroupns_mode: host
     privileged: true
     pre_build_image: true
-
 provisioner:
   name: ansible
   playbooks:
