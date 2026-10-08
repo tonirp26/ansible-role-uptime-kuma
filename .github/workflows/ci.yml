@@ -9,10 +9,6 @@ name: CI
   schedule:
     - cron: "0 7 * * 3"
 
-defaults:
-  run:
-    working-directory: 'uptime-kuma'
-
 jobs:
 
   lint:
@@ -21,8 +17,6 @@ jobs:
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v4
-        with:
-          path: 'uptime-kuma'
 
       - name: Set up Python 3.
         uses: actions/setup-python@v5
@@ -47,8 +41,6 @@ jobs:
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v4
-        with:
-          path: 'uptime-kuma'
 
       - name: Set up Python 3.
         uses: actions/setup-python@v5
