@@ -12,4 +12,4 @@
 
   roles:
     - role: geerlingguy.nodejs
-    - role: uptime-kuma
+    - role: ansible-role-uptime-kuma

@@ -3,7 +3,7 @@ dependencies:
   - geerlingguy.nodejs
 
 galaxy_info:
-  role_name: "uptimekuma"
+  role_name: "uptime_kuma"
   author: tonirp26
   description: Uptime Kuma instalation for Linux.
   company: none.
