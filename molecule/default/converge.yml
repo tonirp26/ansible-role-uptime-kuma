@@ -1,7 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  gather_facts: true
 
   vars:
     nodejs_install_npm_user: root
@@ -9,10 +8,8 @@
 
   pre_tasks:
     - name: Update apt cache.
-      ansible.builtin.apt:
-        update_cache: true
-        cache_valid_time: 600
+      apt: update_cache=true cache_valid_time=600
 
   roles:
     - role: geerlingguy.nodejs
-    - role: ansible-role-uptime-kuma
+    - role: uptime-kuma
