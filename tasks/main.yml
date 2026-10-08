@@ -1,5 +1,5 @@
 ---
-- name: Ensure requiered uptime-kuma dependency is present.
+- name: Ensure requiered Uptime Kuma dependency is present.
   ansible.builtin.apt:
     name:
       - chromium
@@ -13,7 +13,7 @@
     create_home: true
     system: true
 
-- name: Clone uptime-kuma github repository.
+- name: Clone Uptime Kuma github repository.
   ansible.builtin.git:
     repo: "{{ app_repository_url }}"
     dest: "{{ app_repository_dir }}"
@@ -21,7 +21,7 @@
   register: app_updated
   notify: Restart uptime-kuma
 
-- name: Mark uptime-kuma repository as safe.
+- name: Mark Uptime Kuma repository as safe.
   community.general.git_config:
     name: safe.directory
     scope: global

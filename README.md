@@ -6,7 +6,7 @@ After running the role, the `uptime-kuma` service will be available on the serve
 
 ## Requirements
 
-Requires Node 22 or later to be installed on the server (you can use the geerlingguy.nodejs role to install Java if needed).
+Requires Node 22 or later to be installed on the server (you can use the geerlingguy.nodejs role to install Node if needed).
 
 ## Role Variables
 

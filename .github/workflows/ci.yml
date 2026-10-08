@@ -17,7 +17,7 @@ jobs:
 
   lint:
     name: Lint
-    runs-on: debian-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v4
@@ -38,7 +38,7 @@ jobs:
 
   molecule:
     name: Molecule
-    runs-on: debian-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
