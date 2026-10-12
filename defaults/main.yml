@@ -1,5 +1,20 @@
 ---
+# Variable for uptime-kuma instalation.
 app_repository_url: "https://github.com/louislam/uptime-kuma.git"
 app_repository_dir: "/opt/uptime-kuma"
 app_version: "2.5.5"
 systemd_template: uptime-kuma.service.j2
+db_template: uptime-kuma.env.j2
+
+# Variables for uptime-kuma db config.
+uptime_kuma_db_type: "mariadb" 
+uptime_kuma_db_hostname: db.example.com
+uptime_kuma_db_port: "3306"
+uptime_kuma_db_name: uptime_kuma
+uptime_kuma_db_username: uptime_kuma
+uptime_kuma_db_password: "{{ vault_uptime_kuma_db_password }}"
+uptime_kuma_db_enable_ssl: false
+
+# Variables for uptime_kuma admin account.
+uptime_kuma_admin_username: "admin"
+uptime_kuma_admin_password: "{{ vault_uptime_kuma_admin_password }}"

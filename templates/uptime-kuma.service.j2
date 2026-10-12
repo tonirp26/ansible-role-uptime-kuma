@@ -9,6 +9,7 @@ WorkingDirectory=/opt/uptime-kuma
 ExecStart=/usr/bin/npm start
 Restart=always
 RestartSec=5
+EnvironmentFile=/etc/uptime-kuma/uptime-kuma.env
 
 [Install]
 WantedBy=multi-user.target

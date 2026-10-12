@@ -1,0 +1,16 @@
+---
+- name: Ensure Uptime Kuma database directory is present.
+  ansible.builtin.file:
+    path: /etc/uptime-kuma
+    state: directory
+    owner: root
+    group: root
+    mode: "0750"
+
+- name: Setup Uptime Kuma DB configuration.
+  ansible.builtin.template:
+    src: "{{ db_template }}"
+    dest: "/etc/uptime-kuma/uptime-kuma.env"
+    owner: root
+    group: root
+    mode: "0600"

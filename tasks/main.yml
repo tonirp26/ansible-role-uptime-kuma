@@ -58,6 +58,10 @@
     dest: "{{ app_repository_dir }}/chromium"
     state: link
 
+- name: Add user config task.
+  ansible.builtin.include_tasks:
+    file: db_config.yml
+
 - name: Copy systemd configuration template in place.
   ansible.builtin.template:
     src: "{{ systemd_template }}"
@@ -74,3 +78,4 @@
     name: uptime-kuma
     state: started
     enabled: true
+
