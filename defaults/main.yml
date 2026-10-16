@@ -1,13 +1,15 @@
 ---
-# Variable for uptime-kuma instalation.
+# Variables for Uptime Kuma installation.
 app_repository_url: "https://github.com/louislam/uptime-kuma.git"
 app_repository_dir: "/opt/uptime-kuma"
 app_version: "2.5.5"
 systemd_template: uptime-kuma.service.j2
 db_template: uptime-kuma.env.j2
 
-# Variables for uptime-kuma db config.
+# Variables for Uptime Kuma database configuration.
 uptime_kuma_db_type: "mariadb" 
+
+# Only used when db_type is 'mariadb' (NOT TESTED)
 uptime_kuma_db_hostname: db.example.com
 uptime_kuma_db_port: "3306"
 uptime_kuma_db_name: uptime_kuma
@@ -15,11 +17,11 @@ uptime_kuma_db_username: uptime_kuma
 uptime_kuma_db_password: "{{ vault_uptime_kuma_db_password }}"
 uptime_kuma_db_enable_ssl: false
 
-# Variables for uptime_kuma admin account.
+# Variables for the Uptime Kuma admin account.
 uptime_kuma_admin_username: "admin"
 uptime_kuma_admin_password: "{{ vault_uptime_kuma_admin_password }}"
 
-# Variables for adding new monitors.
+# Variables for managing monitors.
 # List of monitors to reconcile, each item using Uptime Kuma's native monitor
 # fields (see https://github.com/louislam/uptime-kuma). Per item:
 #   name          Required. Unique name, also used as the idempotency key.
