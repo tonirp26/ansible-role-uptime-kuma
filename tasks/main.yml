@@ -82,3 +82,8 @@
 - name: Add user config task.
   ansible.builtin.include_tasks:
     file: user_config.yml
+
+- name: Add monitors task.
+  ansible.builtin.include_tasks:
+    file: monitors.yml
+  when: uptime_kuma_monitors | length > 0

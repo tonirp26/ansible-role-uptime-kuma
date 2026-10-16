@@ -18,3 +18,24 @@ uptime_kuma_db_enable_ssl: false
 # Variables for uptime_kuma admin account.
 uptime_kuma_admin_username: "admin"
 uptime_kuma_admin_password: "{{ vault_uptime_kuma_admin_password }}"
+
+# Variables for adding new monitors.
+# List of monitors to reconcile, each item using Uptime Kuma's native monitor
+# fields (see https://github.com/louislam/uptime-kuma). Per item:
+#   name          Required. Unique name, also used as the idempotency key.
+#   type          Required. Uptime Kuma monitor type (http, keyword, ping, ...).
+#   state         Optional. present (default) or absent.
+#   notifications Optional. List of notification names, resolved to their IDs.
+#   tags          Optional. List of tag names, or {name, value} mappings.
+#   parent        Optional. Parent monitor id, or the name of another monitor.
+uptime_kuma_monitors: []
+
+# Defaults merged into every monitor before it is reconciled, so only the fields
+# that differ from these need to be set per monitor.
+uptime_kuma_monitor_defaults:
+  active: true
+  interval: 60
+  retryInterval: 60
+  maxretries: 0
+  resendInterval: 0
+  upsideDown: false
