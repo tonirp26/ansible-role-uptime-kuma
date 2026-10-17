@@ -1,5 +1,43 @@
 ---
+# Variables for Uptime Kuma installation.
 app_repository_url: "https://github.com/louislam/uptime-kuma.git"
 app_repository_dir: "/opt/uptime-kuma"
 app_version: "2.5.5"
 systemd_template: uptime-kuma.service.j2
+db_template: uptime-kuma.env.j2
+
+# Variables for Uptime Kuma database configuration.
+uptime_kuma_db_type: "mariadb"
+
+# Only used when db_type is 'mariadb' (NOT TESTED)
+uptime_kuma_db_hostname: db.example.com
+uptime_kuma_db_port: "3306"
+uptime_kuma_db_name: uptime_kuma
+uptime_kuma_db_username: uptime_kuma
+uptime_kuma_db_password: "{{ vault_uptime_kuma_db_password }}"
+uptime_kuma_db_enable_ssl: false
+
+# Variables for the Uptime Kuma admin account.
+uptime_kuma_admin_username: "admin"
+uptime_kuma_admin_password: "{{ vault_uptime_kuma_admin_password }}"
+
+# Variables for managing monitors.
+# List of monitors to reconcile, each item using Uptime Kuma's native monitor
+# fields (see https://github.com/louislam/uptime-kuma). Per item:
+#   name          Required. Unique name, also used as the idempotency key.
+#   type          Required. Uptime Kuma monitor type (http, keyword, ping, ...).
+#   state         Optional. present (default) or absent.
+#   notifications Optional. List of notification names, resolved to their IDs.
+#   tags          Optional. List of tag names, or {name, value} mappings.
+#   parent        Optional. Parent monitor id, or the name of another monitor.
+uptime_kuma_monitors: []
+
+# Defaults merged into every monitor before it is reconciled, so only the fields
+# that differ from these need to be set per monitor.
+uptime_kuma_monitor_defaults:
+  active: true
+  interval: 60
+  retryInterval: 60
+  maxretries: 0
+  resendInterval: 0
+  upsideDown: false

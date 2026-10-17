@@ -1,0 +1,27 @@
+---
+- name: Deploy Uptime Kuma admin setup script.
+  ansible.builtin.copy:
+    src: setup-uptime-kuma.js
+    dest: "{{ app_repository_dir }}/setup-uptime-kuma.js"
+    owner: uptime-kuma
+    group: uptime-kuma
+    mode: "0750"
+
+- name: Wait for Uptime Kuma to be reachable.
+  ansible.builtin.wait_for:
+    host: 127.0.0.1
+    port: 3001
+    delay: 5
+    timeout: 60
+
+- name: Initialize Uptime Kuma admin account.
+  ansible.builtin.command:
+    cmd: "node {{ app_repository_dir }}/setup-uptime-kuma.js"
+    chdir: "{{ app_repository_dir }}"
+  environment:
+    UK_DIR: "{{ app_repository_dir }}"
+    UK_USER: "{{ uptime_kuma_admin_username }}"
+    UK_PASS: "{{ uptime_kuma_admin_password }}"
+  register: admin_setup
+  changed_when: admin_setup.stdout == 'CHANGED'
+  no_log: true

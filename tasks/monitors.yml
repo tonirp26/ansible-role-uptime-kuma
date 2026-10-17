@@ -1,0 +1,22 @@
+---
+- name: Deploy Uptime Kuma monitor management script.
+  ansible.builtin.copy:
+    src: manage-monitors.js
+    dest: "{{ app_repository_dir }}/manage-monitors.js"
+    owner: uptime-kuma
+    group: uptime-kuma
+    mode: "0750"
+
+- name: Reconcile Uptime Kuma monitors.
+  ansible.builtin.command:
+    cmd: "node {{ app_repository_dir }}/manage-monitors.js"
+    chdir: "{{ app_repository_dir }}"
+  environment:
+    UK_DIR: "{{ app_repository_dir }}"
+    UK_USER: "{{ uptime_kuma_admin_username }}"
+    UK_PASS: "{{ uptime_kuma_admin_password }}"
+    UK_MONITORS: "{{ uptime_kuma_monitors | to_json }}"
+    UK_MONITOR_DEFAULTS: "{{ uptime_kuma_monitor_defaults | to_json }}"
+  register: uptime_kuma_monitors_result
+  changed_when: uptime_kuma_monitors_result.stdout == 'CHANGED'
+  no_log: true
