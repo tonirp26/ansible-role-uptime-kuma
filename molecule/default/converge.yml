@@ -5,6 +5,9 @@
   vars:
     nodejs_install_npm_user: root
     nodejs_version: "22.x"
+    uptime_kuma_db_type: sqlite
+    ## Example created using openssl
+    uptime_kuma_admin_password: "8589ebf212c307a60f91ac1d49ad01e41411e77a46bed867fc1f9b531c119216" 
 
   pre_tasks:
     - name: Update apt cache.

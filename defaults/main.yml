@@ -7,7 +7,7 @@ systemd_template: uptime-kuma.service.j2
 db_template: uptime-kuma.env.j2
 
 # Variables for Uptime Kuma database configuration.
-uptime_kuma_db_type: "mariadb" 
+uptime_kuma_db_type: "mariadb"
 
 # Only used when db_type is 'mariadb' (NOT TESTED)
 uptime_kuma_db_hostname: db.example.com
