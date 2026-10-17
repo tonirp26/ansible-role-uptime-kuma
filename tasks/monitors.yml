@@ -18,5 +18,5 @@
     UK_MONITORS: "{{ uptime_kuma_monitors | to_json }}"
     UK_MONITOR_DEFAULTS: "{{ uptime_kuma_monitor_defaults | to_json }}"
   register: uptime_kuma_monitors_result
-  changed_when: "'CHANGED' in uptime_kuma_monitors_result.stdout"
+  changed_when: uptime_kuma_monitors_result.stdout == 'CHANGED'
   no_log: true
